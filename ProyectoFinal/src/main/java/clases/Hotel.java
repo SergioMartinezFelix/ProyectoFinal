@@ -14,13 +14,13 @@ import java.util.ArrayList;
  */
 public class Hotel extends CosasConNombre{
     
-    Byte estrellas;
+    String estrellas;
     Long dineroHotel;
     Integer personal;
     Long precio;
     ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 
-    public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre) {
+    public Hotel(String estrellas, Long dineroHotel, Integer personal, Long precio, String nombre) {
         super(nombre);
         this.estrellas = estrellas;
         this.nombre = nombre;
@@ -34,11 +34,11 @@ public class Hotel extends CosasConNombre{
     }
     
 
-    public Byte getEstrellas() {
+    public String getEstrellas() {
         return estrellas;
     }
 
-    public void setEstrellas(Byte estrellas) {
+    public void setEstrellas(String estrellas) {
         this.estrellas = estrellas;
     }
 
@@ -87,6 +87,11 @@ public class Hotel extends CosasConNombre{
 
     public void setHabitaciones(ArrayList<Habitacion> habitaciones) {
         this.habitaciones = habitaciones;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" + "estrellas=" + estrellas + ", dineroHotel=" + dineroHotel + ", personal=" + personal + ", precio=" + precio + ", habitaciones=" + habitaciones + '}';
     }
 
     

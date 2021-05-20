@@ -20,6 +20,11 @@ public class Cliente {
     public static void main(String[] args) {
         // TODO code application logic here
     }
+
+    public Cliente(long dineroCliente, TipoCliente tipoCliente) {
+        this.dineroCliente = dineroCliente;
+        this.tipoCliente = tipoCliente;
+    }
     
     long dineroCliente;
     TipoCliente tipoCliente;
