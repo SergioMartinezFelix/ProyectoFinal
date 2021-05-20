@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package enums;
+package clases;
 
 /**
  *
  * @author sergi
  */
-public enum TipoAgencia {
-    
-    JUBILADOS, 
-    NEGOCIOS, 
-    PAREJAS 
+public class Habitacion {
     
 }

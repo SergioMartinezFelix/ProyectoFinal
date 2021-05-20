@@ -9,6 +9,6 @@ package clases;
  *
  * @author sergi
  */
-public class NewClass {
+public class Hotel {
     
 }

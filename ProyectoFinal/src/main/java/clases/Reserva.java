@@ -3,16 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package enums;
+package clases;
+
+import java.time.LocalDateTime;
 
 /**
  *
  * @author sergi
  */
-public enum TipoAgencia {
+public class Reserva {
     
-    JUBILADOS, 
-    NEGOCIOS, 
-    PAREJAS 
+    Habitacion habitacion;
+    Agencias agencia;
+    LocalDateTime fechaEntrada;
+    LocalDateTime fechaSalida;
+    Cliente cliente;
     
 }

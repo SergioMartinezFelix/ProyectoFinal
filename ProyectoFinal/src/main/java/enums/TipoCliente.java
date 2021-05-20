@@ -11,4 +11,9 @@ package enums;
  */
 public enum TipoCliente {
     
+    JUBILADOS, 
+    NEGOCIOS, 
+    PAREJAS 
+    
+    
 }

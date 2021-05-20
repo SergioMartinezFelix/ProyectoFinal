@@ -3,21 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.proyectofinal;
+package clases;
 
 /**
  *
  * @author sergi
  */
-public class NewMain {
+public class Cliente {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        // Hola
     }
     
 }
