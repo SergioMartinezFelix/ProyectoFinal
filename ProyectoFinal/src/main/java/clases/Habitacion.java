@@ -9,6 +9,10 @@ package clases;
  *
  * @author sergi
  */
-public class Habitacion {
+public class Habitacion extends CosasConNombre{
+ 
+    boolean tipoHabitacion;
+    byte nPlazas;
+    byte nServicios;
     
 }

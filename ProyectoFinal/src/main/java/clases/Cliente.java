@@ -5,6 +5,9 @@
  */
 package clases;
 
+import enums.TipoCliente;
+import java.util.ArrayList;
+
 /**
  *
  * @author sergi
@@ -18,4 +21,7 @@ public class Cliente {
         // TODO code application logic here
     }
     
+    long dineroCliente;
+    TipoCliente tipoCliente;
+    ArrayList<String> datos= new ArrayList<String>();
 }

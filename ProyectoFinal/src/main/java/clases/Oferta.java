@@ -11,4 +11,6 @@ package clases;
  */
 public class Oferta {
     
+    Long valorOferta;
+    
 }

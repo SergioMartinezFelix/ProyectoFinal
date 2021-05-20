@@ -9,7 +9,7 @@ package clases;
  *
  * @author sergi
  */
-public class CosasConNombre {
+public abstract class CosasConNombre {
 
     /**
      * @param args the command line arguments
@@ -18,4 +18,5 @@ public class CosasConNombre {
         // TODO code application logic here
     }
     
+    String nombre;
 }

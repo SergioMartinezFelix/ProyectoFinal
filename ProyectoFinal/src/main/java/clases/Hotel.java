@@ -5,10 +5,18 @@
  */
 package clases;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sergi
  */
-public class Hotel {
+public class Hotel extends CosasConNombre{
     
+    Byte estrellas;
+    String nombre;
+    Long dineroHotel;
+    Integer personal;
+    Long precio;
+    ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 }
