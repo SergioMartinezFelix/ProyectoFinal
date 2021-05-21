@@ -24,38 +24,6 @@ public class Habitacion extends CosasConNombre{
         this.nServicios = nServicios;
     }
 
-    public TipoHabitacion getTipoHabitacion() {
-        return tipoHabitacion;
-    }
-
-    public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
-        this.tipoHabitacion = tipoHabitacion;
-    }
-
-    public byte getnPlazas() {
-        return nPlazas;
-    }
-
-    public void setnPlazas(byte nPlazas) {
-        this.nPlazas = nPlazas;
-    }
-
-    public byte getnServicios() {
-        return nServicios;
-    }
-
-    public void setnServicios(byte nServicios) {
-        this.nServicios = nServicios;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
    
     
     

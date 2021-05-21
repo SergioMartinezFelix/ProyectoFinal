@@ -71,13 +71,15 @@ public class NewMain {
                 miHotel.setPrecio(Long.parseLong(sc.nextLine()));
             } catch (NumberFormatException ex) {
                 System.out.println("Debes poner un valor númerico");
+            } catch (PrecioErroneoException ex ){
+                System.out.println("Precio erroneo");
             }
             
-        } while (miHotel.getPrecio() < 50 || miHotel.getPrecio() > 100);
+        } while (miHotel.getPrecio()==null || miHotel.getPrecio() < 50 || miHotel.getPrecio() > 100);
         
         System.out.println("Cuál será el nombre del hotel? ");
         miHotel.setNombre(sc.nextLine());
-        
+        miHotel.setHabitaciones(habitaciones);
         
         
         
