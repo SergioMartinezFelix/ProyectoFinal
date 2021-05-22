@@ -1,0 +1,150 @@
+package interfacesgraficas;
+
+import javax.swing.JFrame;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+import excepciones.PrecioErroneoException;
+
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.sql.*;
+
+public class PantallaDatosHotel extends JFrame {
+	private JTextField textNombreHotel;
+	private JTextField textNumeroEstrellas;
+	private JTextField textDinero;
+	private JTextField textPrecioHabitacion;
+	
+	public PantallaDatosHotel() {
+		setTitle("Perfil del hotel");
+		
+		setSize(800, 600);
+		
+		JLabel lblNewLabel = new JLabel("Nombre Hotel");
+		
+		textNombreHotel = new JTextField();
+		textNombreHotel.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("N\u00FAmero estrellas");
+		
+		textNumeroEstrellas = new JTextField();
+		textNumeroEstrellas.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Dinero inicial");
+		
+		textDinero = new JTextField();
+		textDinero.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Precio por habitaci\u00F3n");
+		
+		textPrecioHabitacion = new JTextField();
+		textPrecioHabitacion.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Comenzar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					// recoger los datos de las cajetillas de texto:
+					String nombreHotel = textNombreHotel.getText();
+					int dinero = Integer.valueOf( textDinero.getText() );
+					int estrellas = Integer.valueOf( textNumeroEstrellas.getText() );
+					int precioHabitacion = Integer.valueOf( textPrecioHabitacion.getText() );
+					
+					// comprobamos que el precio de la habitación esté en el rango adecuado:
+					if (precioHabitacion < 50 || precioHabitacion > 100) {
+						throw new PrecioErroneoException();
+					}
+					
+					// guardamos en la base de datos los datos del hotel:
+   			        String myDriver = "com.mysql.cj.jdbc.Driver";
+			        String myUrl = "jdbc:mysql://localhost/gestionhoteles";
+			        Class.forName(myDriver);
+			        Connection conn = DriverManager.getConnection(myUrl, "root", "");
+			      
+			        Statement st = conn.createStatement();
+
+			        //    note that i'm leaving "date_created" out of this insert statement
+			        st.executeUpdate("INSERT INTO `hoteles` (`id`, `nombre`, `estrellas`, `dinero`, `personal`) VALUES (NULL, '" + nombreHotel + "', '" + estrellas + "', '" + dinero + "', '" + precioHabitacion + "');");
+
+			        JOptionPane.showMessageDialog(null, "Datos del hotel almacenados en la base de datos", "", JOptionPane.INFORMATION_MESSAGE); 
+			        
+			        conn.close();
+					
+				} catch (NumberFormatException error) {
+					error.printStackTrace();
+					
+					JOptionPane.showMessageDialog(null, "Debes escribir campos numéricos en 'dinero' y 'precioHabitacion'", "Error", JOptionPane.ERROR_MESSAGE);
+					
+				} catch (PrecioErroneoException error) {
+					
+					JOptionPane.showMessageDialog(null, "Debes escribir en 'precio de habitación' un número entre 50 y 100 inclusives", "Error", JOptionPane.ERROR_MESSAGE);
+					
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+
+				
+				
+			}
+		});
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(71)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_3)
+						.addComponent(textDinero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_2)
+						.addComponent(textNumeroEstrellas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_1)
+						.addComponent(textNombreHotel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addComponent(btnNewButton)
+							.addComponent(textPrecioHabitacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(613, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(69)
+					.addComponent(lblNewLabel)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textNombreHotel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblNewLabel_1)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textNumeroEstrellas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblNewLabel_2)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textDinero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblNewLabel_3)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textPrecioHabitacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(44)
+					.addComponent(btnNewButton)
+					.addContainerGap(196, Short.MAX_VALUE))
+		);
+		getContentPane().setLayout(groupLayout);
+		setVisible(true);
+		
+	}
+}
+
