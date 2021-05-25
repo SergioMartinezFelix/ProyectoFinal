@@ -9,7 +9,7 @@ package enums;
  *
  * @author sergi
  */
-public enum TipoAgencia {
+public enum TipoViaje {
     
     JUBILADOS, 
     NEGOCIOS, 

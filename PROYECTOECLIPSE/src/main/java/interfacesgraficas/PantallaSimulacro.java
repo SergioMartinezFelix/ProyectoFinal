@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.GroupLayout;
@@ -11,17 +12,28 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import clases.Agencia;
+import clases.Cliente;
 import clases.Hotel;
+import enums.TipoHabitacion;
+import enums.TipoViaje;
+import excepciones.HabitacionesInsuficientesException;
+import excepciones.PrecioInsuficienteException;
 
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 
 public class PantallaSimulacro extends JFrame {
 
-	private JTextArea textArea; 
+	private JTextArea textArea;
+	private Hotel hotel;
 	
 	public PantallaSimulacro(Hotel hotelCargado) {
 
+			// guardamos esta variable
+			hotel = hotelCargado;
+		
   	 	    // para depurar el hotel:
 			System.out.println("Datos del hotelCargado: ");
 			System.out.println("Nombre: " + hotelCargado.getNombre() );
@@ -51,6 +63,87 @@ public class PantallaSimulacro extends JFrame {
 	        		
 	        		textArea.setText( textArea.getText() + queOcurre );
 	        		
+	        		// cada día de simulación sólo vendrá un cliente al hotel
+	        		
+	        		// generamos un número al azar para el número de habitaciones que quiere el cliente de hoy
+	        		
+	        		/*
+	        		 
+					sortearemos el número de habitaciones que el cliente necesitará esa jornada, el tipo de habitación (boolean mar o ciudad), el tipo de cliente, la agencia que usará así como el precio que estará dispuesto a pagar. El cliente pagará ese dinero a la agencia. 
+
+					Si el tipo de cliente coincide con el tipo de agencia, entonces el cliente obtendrá un descuento en el precio, por lo que la agencia devolverá parte del dinero pagado al cliente. Y aparte hará el ingreso del dinero de la estancia al hotel. 
+	        		  
+	        		 */
+	        		
+	        		Random random = new Random();
+	        		int numeroHabitacionesCliente = random.nextInt(200) + 1;
+	        			     
+	        		TipoHabitacion tipoHabitacion;
+	        		byte mar = (byte) (random.nextInt(2));
+	        		if (mar == 0) {
+	        			tipoHabitacion = TipoHabitacion.CIUDAD;
+	        		} else {
+	        			tipoHabitacion = TipoHabitacion.MAR;
+	        		}
+	        		
+	        		// el cliente y la agencia con la que contrata serán de tipos elegidos también al azar:
+	        		TipoViaje tipoCliente = null;
+	        		TipoViaje tipoAgencia = null;
+	        		
+	        		byte tipoClienteAzar = (byte) (random.nextInt(3) + 1);
+	        		byte tipoAgenciaAzar = (byte) (random.nextInt(3) + 1);
+
+	        		switch (tipoClienteAzar) {
+	        			case 1:
+	        				tipoCliente = TipoViaje.JUBILADOS;
+	        				break;
+	        			
+	        			case 2:
+	        				tipoCliente = TipoViaje.NEGOCIOS;	        				
+	        				break;
+	        				
+	        			case 3:
+	        				tipoCliente = TipoViaje.PAREJAS;	        				
+	        				break;
+	        		}
+
+	        		switch (tipoAgenciaAzar) {
+	        			case 1:
+	        				tipoAgencia = TipoViaje.JUBILADOS;
+	        				break;
+	        			
+	        			case 2:
+	        				tipoAgencia = TipoViaje.NEGOCIOS;	        				
+	        				break;
+	        				
+	        			case 3:
+	        				tipoAgencia = TipoViaje.PAREJAS;	        				
+	        				break;
+	        		}
+	        		
+	        		// también generamos al azar el precio que está dispuesto a pagar por habitación -de 30€ a 80€-:
+	        		int precioDispuestoAPagar = random.nextInt(51) + 30;
+	        		
+	        		// creamos un cliente y una agencia para que interactúen entre sí:
+	        		Cliente cliente = new Cliente(precioDispuestoAPagar, tipoCliente, precioDispuestoAPagar);
+	        		Agencia agencia = new Agencia(tipoAgencia, (byte) 25);
+	        			
+	        		// aquí se procesa el pago:
+	        		cliente.pagarAgencia(agencia, numeroHabitacionesCliente);	        		
+	        		try {
+						agencia.pagarHotel(hotel);
+						JOptionPane.showMessageDialog(null, "Reserva realizada con éxito", "", JOptionPane.INFORMATION_MESSAGE);
+					} catch (PrecioInsuficienteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Cantidad de dinero insuficiente...", "", JOptionPane.ERROR_MESSAGE);	
+					} catch (HabitacionesInsuficientesException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "No hay suficientes habitaciones en el hotel...", "", JOptionPane.ERROR_MESSAGE);
+					}
+	        			
+	        		
 	        	}
 	        });
 	        GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -59,18 +152,18 @@ public class PantallaSimulacro extends JFrame {
 	        		.addGroup(groupLayout.createSequentialGroup()
 	        			.addGap(34)
 	        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-	        				.addComponent(btnNewButton)
-	        				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE))
-	        			.addContainerGap(56, Short.MAX_VALUE))
+	        				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE)
+	        				.addComponent(btnNewButton))
+	        			.addContainerGap(62, Short.MAX_VALUE))
 	        );
 	        groupLayout.setVerticalGroup(
 	        	groupLayout.createParallelGroup(Alignment.TRAILING)
-	        		.addGroup(groupLayout.createSequentialGroup()
+	        		.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 	        			.addGap(39)
 	        			.addComponent(btnNewButton)
-	        			.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-	        			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-	        			.addGap(25))
+	        			.addGap(18)
+	        			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+	        			.addGap(19))
 	        );
 	        getContentPane().setLayout(groupLayout);
 
@@ -78,7 +171,7 @@ public class PantallaSimulacro extends JFrame {
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        // set the frame size (you'll usually want to call frame.pack())
-	        setSize(new Dimension(330, 313));
+	        setSize(new Dimension(540, 382));
 	        
 	        // center the frame
 	        setLocationRelativeTo(null);

@@ -109,11 +109,11 @@ public class PantallaCargarPartida extends JFrame {
 			          int dinero = rs.getInt("dinero");
 			          int personal = rs.getInt("personal");
 			          int precioHabitacion = rs.getInt("precio_habitacion");
+			          int numeroHabitaciones = rs.getInt("numero_habitaciones");
 			         
 			          //public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre) {
-			          Hotel hotelCargado = new Hotel((byte) estrellas, (long) dinero, personal, (long) precioHabitacion, nombre);
+			          Hotel hotelCargado = new Hotel((byte) estrellas, (long) dinero, personal, (long) precioHabitacion, nombre, numeroHabitaciones);
 			          
-			        
 			          JOptionPane.showMessageDialog(null, "Datos del hotel cargados desde la base de datos, iniciando simulador", "", JOptionPane.INFORMATION_MESSAGE);
 				        
 				      PantallaSimulacro pantallaSimulacro = new PantallaSimulacro(hotelCargado);

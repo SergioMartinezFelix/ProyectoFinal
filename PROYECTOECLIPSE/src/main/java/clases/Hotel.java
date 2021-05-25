@@ -5,7 +5,10 @@
  */
 package clases;
 
+import excepciones.HabitacionesInsuficientesException;
 import excepciones.PrecioErroneoException;
+import excepciones.PrecioInsuficienteException;
+
 import java.util.ArrayList;
 
 /**
@@ -18,15 +21,17 @@ public class Hotel extends CosasConNombre{
     private Long dineroHotel;
     private Integer personal;
     private Long precio; // precio de cada habitación
+    private int numeroHabitaciones;
     private ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 
-    public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre) {
+    public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre, int numeroHabitaciones) {
         super(nombre);
         this.estrellas = estrellas;
         this.nombre = nombre;
         this.dineroHotel = dineroHotel;
         this.personal = personal;
         this.precio = precio;
+        this.numeroHabitaciones = numeroHabitaciones;
     }
     
      public Hotel(String nombre) {
@@ -56,8 +61,16 @@ public class Hotel extends CosasConNombre{
     public void setDineroHotel(Long dineroHotel) {
         this.dineroHotel = dineroHotel;
     }
+    
+    public int getNumeroHabitaciones() {
+		return numeroHabitaciones;
+	}
 
-    public Integer getPersonal() {
+	public void setNumeroHabitaciones(int numeroHabitaciones) {
+		this.numeroHabitaciones = numeroHabitaciones;
+	}
+
+	public Integer getPersonal() {
         return personal;
     }
 
@@ -94,5 +107,21 @@ public class Hotel extends CosasConNombre{
     }
 
     
-    
+    public void cobrar(Agencia agencia) throws PrecioInsuficienteException, HabitacionesInsuficientesException {
+    	 
+    	long precioQuePagarReal = agencia.getNumeroHabitacionesUltimaTransaccion() * this.getPrecio();
+    	
+    	// vemos si hay suficientes habitaciones:
+    	if (this.getNumeroHabitaciones() < agencia.getNumeroHabitacionesUltimaTransaccion()) {
+    		throw new HabitacionesInsuficientesException();
+    	// vemos si tienen suficiente dinero:	
+    	} else if (agencia.getDineroUltimaTransaccion() < precioQuePagarReal) {
+    		throw new PrecioInsuficienteException();
+    	} else {
+    		
+    		this.dineroHotel = this.dineroHotel + precioQuePagarReal;  
+    		
+    	}
+    	
+    }
 }

@@ -13,9 +13,9 @@ import enums.TipoHabitacion;
  */
 public class Habitacion extends CosasConNombre{
  
-    TipoHabitacion tipoHabitacion;
-    byte nPlazas;
-    byte nServicios;
+    private TipoHabitacion tipoHabitacion; // mar, montana o ciudad
+    private byte nPlazas;
+    private byte nServicios;
 
     public Habitacion(TipoHabitacion tipoHabitacion, byte nPlazas, byte nServicios, String nombre) {
         super(nombre);

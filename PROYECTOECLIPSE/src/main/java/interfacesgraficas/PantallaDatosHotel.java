@@ -23,6 +23,7 @@ public class PantallaDatosHotel extends JFrame {
 	private JTextField textDinero;
 	private JTextField textPrecioHabitacion;
 	private JTextField textFieldPersonal;
+	private JTextField textNumeroHabitaciones;
 	
 	public PantallaDatosHotel() {
 		setTitle("Perfil del hotel");
@@ -60,6 +61,7 @@ public class PantallaDatosHotel extends JFrame {
 					int estrellas = Integer.valueOf( textNumeroEstrellas.getText() );
 					int precioHabitacion = Integer.valueOf( textPrecioHabitacion.getText() );
 					int personal = Integer.valueOf( textFieldPersonal.getText() );
+					int numeroHabitaciones = Integer.valueOf( textNumeroHabitaciones.getText() );
 					
 					// comprobamos que el precio de la habitación esté en el rango adecuado:
 					if (precioHabitacion < 50 || precioHabitacion > 100) {
@@ -75,11 +77,11 @@ public class PantallaDatosHotel extends JFrame {
 			        Statement st = conn.createStatement();
 
 			        //    note that i'm leaving "date_created" out of this insert statement
-			        st.executeUpdate("INSERT INTO `hoteles` (`id`, `nombre`, `estrellas`, `dinero`, `personal`, `precio_habitacion`) VALUES (NULL, '" + nombreHotel + "', '" + estrellas + "', '" + dinero + "', '" + personal + "', '" + precioHabitacion + "');");
+			        st.executeUpdate("INSERT INTO `hoteles` (`id`, `nombre`, `estrellas`, `dinero`, `personal`, `precio_habitacion`, `numero_habitaciones`) VALUES (NULL, '" + nombreHotel + "', '" + estrellas + "', '" + dinero + "', '" + personal + "', '" + precioHabitacion + "', '" + numeroHabitaciones + "');");
 
 			        JOptionPane.showMessageDialog(null, "Datos del hotel guardados en la base de datos, iniciando simulador...", "", JOptionPane.INFORMATION_MESSAGE);
 			        
-			        Hotel hotelCargado = new Hotel((byte) estrellas, (long) dinero, personal, (long) precioHabitacion, nombreHotel);
+			        Hotel hotelCargado = new Hotel((byte) estrellas, (long) dinero, personal, (long) precioHabitacion, nombreHotel, numeroHabitaciones);
 			        
 			        PantallaSimulacro pantallaSimulacro = new PantallaSimulacro( hotelCargado );
 			        
@@ -110,6 +112,11 @@ public class PantallaDatosHotel extends JFrame {
 		
 		textFieldPersonal = new JTextField();
 		textFieldPersonal.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("N\u00FAmero de habitaciones");
+		
+		textNumeroHabitaciones = new JTextField();
+		textNumeroHabitaciones.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -123,12 +130,14 @@ public class PantallaDatosHotel extends JFrame {
 						.addComponent(lblNewLabel_1)
 						.addComponent(textNombreHotel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel)
+						.addComponent(lblNewLabel_4)
+						.addComponent(textPrecioHabitacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 							.addComponent(btnNewButton)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNewLabel_4)
-								.addComponent(textPrecioHabitacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textFieldPersonal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(lblNewLabel_5)
+								.addComponent(textFieldPersonal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textNumeroHabitaciones, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap(613, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -154,9 +163,13 @@ public class PantallaDatosHotel extends JFrame {
 					.addComponent(lblNewLabel_4)
 					.addGap(18)
 					.addComponent(textFieldPersonal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(27)
+					.addGap(18)
+					.addComponent(lblNewLabel_5)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textNumeroHabitaciones, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
 					.addComponent(btnNewButton)
-					.addContainerGap(143, Short.MAX_VALUE))
+					.addGap(59))
 		);
 		getContentPane().setLayout(groupLayout);
 		setVisible(true);

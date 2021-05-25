@@ -12,6 +12,7 @@ package enums;
 public enum TipoHabitacion {
     
     MAR,
-    MONTANA
+    MONTANA,
+    CIUDAD
     
 }

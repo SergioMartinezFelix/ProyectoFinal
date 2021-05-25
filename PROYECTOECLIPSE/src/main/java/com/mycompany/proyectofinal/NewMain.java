@@ -9,7 +9,7 @@ import clases.Agencia;
 import clases.Cliente;
 import clases.Habitacion;
 import clases.Hotel;
-import enums.TipoCliente;
+import enums.TipoViaje;
 import enums.TipoHabitacion;
 import excepciones.PrecioErroneoException;
 import interfacesgraficas.PantallaInicio;
@@ -56,7 +56,7 @@ public class NewMain {
      * @throws excepciones.PrecioErroneoException
      */
     public static void main(String[] args) throws PrecioErroneoException, NumberFormatException {
-        
+		
     	PantallaInicio  pantallaInicio  = new PantallaInicio();
     	    	
     	/*
