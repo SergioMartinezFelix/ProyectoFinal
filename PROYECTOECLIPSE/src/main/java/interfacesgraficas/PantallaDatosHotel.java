@@ -8,18 +8,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import clases.Hotel;
 import excepciones.PrecioErroneoException;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.*;
+import javax.swing.JTextArea;
 
 public class PantallaDatosHotel extends JFrame {
 	private JTextField textNombreHotel;
 	private JTextField textNumeroEstrellas;
 	private JTextField textDinero;
 	private JTextField textPrecioHabitacion;
+	private JTextField textFieldPersonal;
 	
 	public PantallaDatosHotel() {
 		setTitle("Perfil del hotel");
@@ -56,6 +59,7 @@ public class PantallaDatosHotel extends JFrame {
 					int dinero = Integer.valueOf( textDinero.getText() );
 					int estrellas = Integer.valueOf( textNumeroEstrellas.getText() );
 					int precioHabitacion = Integer.valueOf( textPrecioHabitacion.getText() );
+					int personal = Integer.valueOf( textFieldPersonal.getText() );
 					
 					// comprobamos que el precio de la habitación esté en el rango adecuado:
 					if (precioHabitacion < 50 || precioHabitacion > 100) {
@@ -71,9 +75,13 @@ public class PantallaDatosHotel extends JFrame {
 			        Statement st = conn.createStatement();
 
 			        //    note that i'm leaving "date_created" out of this insert statement
-			        st.executeUpdate("INSERT INTO `hoteles` (`id`, `nombre`, `estrellas`, `dinero`, `personal`) VALUES (NULL, '" + nombreHotel + "', '" + estrellas + "', '" + dinero + "', '" + precioHabitacion + "');");
+			        st.executeUpdate("INSERT INTO `hoteles` (`id`, `nombre`, `estrellas`, `dinero`, `personal`, `precio_habitacion`) VALUES (NULL, '" + nombreHotel + "', '" + estrellas + "', '" + dinero + "', '" + personal + "', '" + precioHabitacion + "');");
 
-			        JOptionPane.showMessageDialog(null, "Datos del hotel almacenados en la base de datos", "", JOptionPane.INFORMATION_MESSAGE); 
+			        JOptionPane.showMessageDialog(null, "Datos del hotel guardados en la base de datos, iniciando simulador...", "", JOptionPane.INFORMATION_MESSAGE);
+			        
+			        Hotel hotelCargado = new Hotel((byte) estrellas, (long) dinero, personal, (long) precioHabitacion, nombreHotel);
+			        
+			        PantallaSimulacro pantallaSimulacro = new PantallaSimulacro( hotelCargado );
 			        
 			        conn.close();
 					
@@ -95,12 +103,13 @@ public class PantallaDatosHotel extends JFrame {
 					e1.printStackTrace();
 				}
 				
-				
-
-				
-				
 			}
 		});
+		
+		JLabel lblNewLabel_4 = new JLabel("Personal");
+		
+		textFieldPersonal = new JTextField();
+		textFieldPersonal.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -116,7 +125,10 @@ public class PantallaDatosHotel extends JFrame {
 						.addComponent(lblNewLabel)
 						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 							.addComponent(btnNewButton)
-							.addComponent(textPrecioHabitacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_4)
+								.addComponent(textPrecioHabitacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textFieldPersonal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap(613, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -138,9 +150,13 @@ public class PantallaDatosHotel extends JFrame {
 					.addComponent(lblNewLabel_3)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(textPrecioHabitacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(44)
+					.addGap(18)
+					.addComponent(lblNewLabel_4)
+					.addGap(18)
+					.addComponent(textFieldPersonal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(27)
 					.addComponent(btnNewButton)
-					.addContainerGap(196, Short.MAX_VALUE))
+					.addContainerGap(143, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 		setVisible(true);

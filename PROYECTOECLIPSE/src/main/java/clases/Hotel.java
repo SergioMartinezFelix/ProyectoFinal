@@ -17,7 +17,7 @@ public class Hotel extends CosasConNombre{
     private Byte estrellas;
     private Long dineroHotel;
     private Integer personal;
-    private Long precio;
+    private Long precio; // precio de cada habitación
     private ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 
     public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre) {

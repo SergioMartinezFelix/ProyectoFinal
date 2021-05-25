@@ -18,7 +18,16 @@ public class PantallaInicio extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 								
-				PantallaDatosHotel pantallaDatosHotel = new PantallaDatosHotel();  
+				PantallaDatosHotel pantallaDatosHotel = new PantallaDatosHotel();
+				
+			}
+		});
+		
+		JButton btnNewButton_1 = new JButton("Cargar Partida Ya Creada");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				PantallaCargarPartida pantallaCargarPartida = new PantallaCargarPartida(); 
 				
 			}
 		});
@@ -28,17 +37,22 @@ public class PantallaInicio extends JFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(299)
-					.addComponent(btnNewButton)
-					.addContainerGap(396, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnNewButton_1)
+						.addComponent(btnNewButton))
+					.addContainerGap(352, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(115)
 					.addComponent(btnNewButton)
-					.addContainerGap(423, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btnNewButton_1)
+					.addContainerGap(382, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
+
 		
 		setVisible(true);
 	}

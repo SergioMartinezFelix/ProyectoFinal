@@ -16,6 +16,7 @@ public abstract class CosasConNombre {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+    	
     }
     
     String nombre;
