@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class Hotel extends CosasConNombre{
     
     private Byte estrellas;
-    private Long dineroHotel;
+    private int dineroHotel;
     private Integer personal;
-    private Long precio; // precio de cada habitación
+    private int precio; // precio de cada habitación
     private int numeroHabitaciones;
     private ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 
-    public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre, int numeroHabitaciones) {
+    public Hotel(Byte estrellas, int dineroHotel, Integer personal, int precio, String nombre, int numeroHabitaciones) {
         super(nombre);
         this.estrellas = estrellas;
         this.nombre = nombre;
@@ -54,11 +54,11 @@ public class Hotel extends CosasConNombre{
         this.nombre = nombre;
     }
 
-    public Long getDineroHotel() {
+    public int getDineroHotel() {
         return dineroHotel;
     }
 
-    public void setDineroHotel(Long dineroHotel) {
+    public void setDineroHotel(int dineroHotel) {
         this.dineroHotel = dineroHotel;
     }
     
@@ -78,17 +78,17 @@ public class Hotel extends CosasConNombre{
         this.personal = personal;
     }
 
-    public Long getPrecio() {
+    public int getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Long precio) throws PrecioErroneoException{
+    public void setPrecio(int precio) throws PrecioErroneoException{
         if(precio<50 || precio>100){
             PrecioErroneoException ex = new PrecioErroneoException("El precio debe obscilar entre 50 y 100â‚¬");
             throw ex;
         }
         else{
-        this.precio = precio;
+        	this.precio = precio;
         }
         
     }
@@ -109,7 +109,10 @@ public class Hotel extends CosasConNombre{
     
     public void cobrar(Agencia agencia) throws PrecioInsuficienteException, HabitacionesInsuficientesException {
     	 
-    	long precioQuePagarReal = agencia.getNumeroHabitacionesUltimaTransaccion() * this.getPrecio();
+    	int precioQuePagarReal = agencia.getNumeroHabitacionesUltimaTransaccion() * this.getPrecio();
+    	
+    	System.out.println("agencia.getDineroUltimaTransaccion() es " + agencia.getDineroUltimaTransaccion());
+    	System.out.println("precioQuePagarReal es " + precioQuePagarReal);
     	
     	// vemos si hay suficientes habitaciones:
     	if (this.getNumeroHabitaciones() < agencia.getNumeroHabitacionesUltimaTransaccion()) {
@@ -120,6 +123,12 @@ public class Hotel extends CosasConNombre{
     	} else {
     		
     		this.dineroHotel = this.dineroHotel + precioQuePagarReal;  
+    		
+    		// supongamos que el cliente paga 70€ por habitación a la agencia
+    		// pero que a la agencia le cuesta 50€ la habitación cuando paga al hotel
+    		// por lo tanto tendría de beneficio 70€ - 50€ = 20€
+    		
+    		agencia.setDinero( agencia.getDinero() + agencia.getDineroUltimaTransaccion() - precioQuePagarReal );
     		
     	}
     	

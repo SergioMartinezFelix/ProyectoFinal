@@ -41,7 +41,7 @@ public class PantallaCargarPartida extends JFrame {
 		    String myDriver = "com.mysql.cj.jdbc.Driver";
 	        String myUrl = "jdbc:mysql://localhost/gestionhoteles";
 	        Class.forName(myDriver);
-	        Connection conn = DriverManager.getConnection(myUrl, "root", "");
+	        Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); 
 	        
 	        // create the java statement
 	        Statement st = conn.createStatement();
@@ -59,6 +59,7 @@ public class PantallaCargarPartida extends JFrame {
 	        }
 	        st.close();			        
 	        
+	        // almacenamos el arraylist generado antes en el combobox de la lista de hosteles:
 	        String[] array = listaHoteles.toArray(new String[ listaHoteles.size() ]);
 	        comboBoxHoteles = new JComboBox(array);
 	        
@@ -90,9 +91,9 @@ public class PantallaCargarPartida extends JFrame {
 					
 					// guardamos en la base de datos los datos del hotel:
    			        String myDriver = "com.mysql.cj.jdbc.Driver";
-			        String myUrl = "jdbc:mysql://localhost/gestionhoteles";
+			        String myUrl = "jdbc:mysql://localhost/gestionhoteles"; // <- getionhotesle es la bd
 			        Class.forName(myDriver);
-			        Connection conn = DriverManager.getConnection(myUrl, "root", "");
+			        Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); // <- root y "" son usuario y pass
 			        
 			        // create the java statement
 			        Statement st = conn.createStatement();
@@ -112,7 +113,7 @@ public class PantallaCargarPartida extends JFrame {
 			          int numeroHabitaciones = rs.getInt("numero_habitaciones");
 			         
 			          //public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre) {
-			          Hotel hotelCargado = new Hotel((byte) estrellas, (long) dinero, personal, (long) precioHabitacion, nombre, numeroHabitaciones);
+			          Hotel hotelCargado = new Hotel((byte) estrellas, dinero, personal, precioHabitacion, nombre, numeroHabitaciones);
 			          
 			          JOptionPane.showMessageDialog(null, "Datos del hotel cargados desde la base de datos, iniciando simulador", "", JOptionPane.INFORMATION_MESSAGE);
 				        

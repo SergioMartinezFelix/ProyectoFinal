@@ -23,6 +23,8 @@ public class PantallaInicio extends JFrame {
 			}
 		});
 		
+		
+		
 		JButton btnNewButton_1 = new JButton("Cargar Partida Ya Creada");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -34,13 +36,13 @@ public class PantallaInicio extends JFrame {
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(299)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnNewButton_1)
 						.addComponent(btnNewButton))
-					.addContainerGap(352, Short.MAX_VALUE))
+					.addContainerGap(330, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)

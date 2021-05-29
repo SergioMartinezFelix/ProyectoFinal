@@ -16,25 +16,26 @@ import java.util.ArrayList;
  */
 public class Cliente implements PagoAgencia {
 
-    private long dineroCliente;
+    private int dineroCliente;
     private int dineroDispuestoAPagar; // por una habitación
     private TipoViaje tipoCliente;
     private ArrayList<String> datos= new ArrayList<String>();
 	
-    public Cliente(long dineroCliente, TipoViaje tipoCliente, int dineroDipuestoAPagar) {
+    public Cliente(int dineroCliente, TipoViaje tipoCliente, int dineroDispuestoAPagar) {
         this.dineroCliente = dineroCliente;
+        this.dineroDispuestoAPagar = dineroDispuestoAPagar;
         this.tipoCliente = tipoCliente;
     }
 
-	public long getDineroCliente() {
+	public int getDineroCliente() {
 		return dineroCliente;
 	}
 	
-	public long getDineroDispuestoAPagar() {
+	public int getDineroDispuestoAPagar() {
 		return dineroDispuestoAPagar;
 	}	
 
-	public void setDineroCliente(long dineroCliente) {
+	public void setDineroCliente(int dineroCliente) {
 		this.dineroCliente = dineroCliente;
 	}
 
@@ -56,16 +57,23 @@ public class Cliente implements PagoAgencia {
 
 	public void pagarAgencia(Agencia agencia, int numeroHabitaciones) {
 		
+		// precio final que paga el cliente A LA AGENCIA
 		int precioFinal = (int) this.getDineroDispuestoAPagar() * numeroHabitaciones;
+		
+		System.out.println("precioFinal es " + precioFinal);
 		
 		// en caso de que el tipo de cliente coincida con el tipo de agencia, habrá un descuento:
 		if (getTipoCliente() == agencia.getTipoAgencia()) {
 			
 			// aplicamos el descuento:
-			precioFinal = precioFinal - (precioFinal * (agencia.getDescuento() / 100));         
+			precioFinal = precioFinal - (precioFinal * (agencia.getDescuento() / 100));
+			
+			System.out.println("precioFinal 2 es " + precioFinal);
 		}
 		
+		// aquí es donde realmente cobra la agerncia del cliente
 		agencia.setDineroUltimaTransaccion(precioFinal);
+		// la agencia registra también el número de habitaciones por las que ha recibido ese dinero
 		agencia.setNumeroHabitacionesUltimaTransaccion(numeroHabitaciones);
 	}
     

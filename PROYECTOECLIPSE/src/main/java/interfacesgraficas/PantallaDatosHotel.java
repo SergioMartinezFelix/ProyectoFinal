@@ -17,6 +17,9 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 import javax.swing.JTextArea;
 
+
+// esta ventana crea un nuevo juego de hotel con datos nuevos pedidos al usuario
+/// y los guarda en una base de datos
 public class PantallaDatosHotel extends JFrame {
 	private JTextField textNombreHotel;
 	private JTextField textNumeroEstrellas;
@@ -70,18 +73,16 @@ public class PantallaDatosHotel extends JFrame {
 					
 					// guardamos en la base de datos los datos del hotel:
    			        String myDriver = "com.mysql.cj.jdbc.Driver";
-			        String myUrl = "jdbc:mysql://localhost/gestionhoteles";
+			        String myUrl = "jdbc:mysql://localhost/gestionhoteles"; // <- "gestionhoteles" es mi BD
 			        Class.forName(myDriver);
-			        Connection conn = DriverManager.getConnection(myUrl, "root", "");
+			        Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); //<- "root" y "" son user y pass
 			      
 			        Statement st = conn.createStatement();
-
-			        //    note that i'm leaving "date_created" out of this insert statement
 			        st.executeUpdate("INSERT INTO `hoteles` (`id`, `nombre`, `estrellas`, `dinero`, `personal`, `precio_habitacion`, `numero_habitaciones`) VALUES (NULL, '" + nombreHotel + "', '" + estrellas + "', '" + dinero + "', '" + personal + "', '" + precioHabitacion + "', '" + numeroHabitaciones + "');");
 
 			        JOptionPane.showMessageDialog(null, "Datos del hotel guardados en la base de datos, iniciando simulador...", "", JOptionPane.INFORMATION_MESSAGE);
 			        
-			        Hotel hotelCargado = new Hotel((byte) estrellas, (long) dinero, personal, (long) precioHabitacion, nombreHotel, numeroHabitaciones);
+			        Hotel hotelCargado = new Hotel((byte) estrellas, dinero, personal, precioHabitacion, nombreHotel, numeroHabitaciones);
 			        
 			        PantallaSimulacro pantallaSimulacro = new PantallaSimulacro( hotelCargado );
 			        

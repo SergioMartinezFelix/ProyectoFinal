@@ -32,7 +32,7 @@ public class PantallaSimulacro extends JFrame {
 	public PantallaSimulacro(Hotel hotelCargado) {
 
 			// guardamos esta variable
-			hotel = hotelCargado;
+			this.hotel = hotelCargado;
 		
   	 	    // para depurar el hotel:
 			System.out.println("Datos del hotelCargado: ");
@@ -60,7 +60,6 @@ public class PantallaSimulacro extends JFrame {
 	        	public void actionPerformed(ActionEvent e) {
 	        		
 	        		String queOcurre = "Hasta el final de este día ha ocurrido esto: \n";
-	        		
 	        		textArea.setText( textArea.getText() + queOcurre );
 	        		
 	        		// cada día de simulación sólo vendrá un cliente al hotel
@@ -127,22 +126,75 @@ public class PantallaSimulacro extends JFrame {
 	        		// creamos un cliente y una agencia para que interactúen entre sí:
 	        		Cliente cliente = new Cliente(precioDispuestoAPagar, tipoCliente, precioDispuestoAPagar);
 	        		Agencia agencia = new Agencia(tipoAgencia, (byte) 25);
-	        			
+	        		
+	        		// informamos del tipo de cliente y agencia que nos quiere contratar hoy
+	        		
+	        		queOcurre = "El Cliente quiere estas habitaciones " + numeroHabitacionesCliente  +" \n";
+	        		queOcurre += "y te ofrece este dinero como mucho " + precioDispuestoAPagar  +" \n";
+	        		queOcurre += "El Cliente es además del tipo " + tipoCliente +" \n \n";
+	        		queOcurre += "La Agencia es de tipo " + tipoAgencia +" \n \n";
+	        		textArea.setText( textArea.getText() + queOcurre );
+	        		
+	        		// hay una cierta cantidad de dinero que pierdes cada día por gastos de mantenimiento, etc.
+	        		// gastos fijos en luz, basura, comedor, etc:
+	        		int gastosFijos = 400;	        		
+	        		
+	        		// gastos variables de lavandería y limpieza de cada habitación:
+	        		int gastosVariables = 0;
+	        		
 	        		// aquí se procesa el pago:
 	        		cliente.pagarAgencia(agencia, numeroHabitacionesCliente);	        		
 	        		try {
 						agencia.pagarHotel(hotel);
+						
+						gastosVariables = 10 * numeroHabitacionesCliente;
+						
 						JOptionPane.showMessageDialog(null, "Reserva realizada con éxito", "", JOptionPane.INFORMATION_MESSAGE);
+						
+						queOcurre = "La agencia te ha pagado correctamente las habitaciones, y se reservan " +" \n";
+		        		textArea.setText( textArea.getText() + queOcurre );
 					} catch (PrecioInsuficienteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Cantidad de dinero insuficiente...", "", JOptionPane.ERROR_MESSAGE);	
+						JOptionPane.showMessageDialog(null, "Cantidad de dinero insuficiente...", "", JOptionPane.ERROR_MESSAGE);
+						
+						queOcurre = "La agencia no te ha ofrecido suficiente dinero por las habitaciones que quiere, así que no hay reserva \n";
+		        		textArea.setText( textArea.getText() + queOcurre );
 					} catch (HabitacionesInsuficientesException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						JOptionPane.showMessageDialog(null, "No hay suficientes habitaciones en el hotel...", "", JOptionPane.ERROR_MESSAGE);
+						
+						queOcurre = "La agencia te ha pedido un número de habitaciones demasiado elevado, así que no hay reserva \n";		
+		        		textArea.setText( textArea.getText() + queOcurre );
 					}
+	        		
+	        		// calculamos los gastos:
+	        		
+	        		int dinero = hotel.getDineroHotel() - (gastosFijos + gastosVariables);
+	        		hotel.setDineroHotel(dinero);
+	        		
+	        		queOcurre = "Por costes diarios de mantenimiento y demás has tenido estos gastos: " + (gastosFijos + gastosVariables) + "€ \n";
+	        		queOcurre += "Por eso te queda este dinero: " + hotel.getDineroHotel() + "\n \n \n";
+	        		textArea.setText( textArea.getText() + queOcurre );
+	        		
+	        		// por hacer:
+	        		
+	        		// si te arruinas acaba el juego
+	        		// y si llegas a una cierta cantidad es que has ganado el juego
+	        		
+	        		if (hotel.getDineroHotel() <= 0) {
+	        			// pierdes y se acaba el juego 
+
+	        			dispose(); // así cerramos la ventana actual
+	        			VentanaPierdes ventanaPierdes = new VentanaPierdes();
 	        			
+	        		} else if (hotel.getDineroHotel() >= 10000) {
+	        			
+	        			// ganas y se acaba el juego
+	        			dispose(); // así cerramos la ventana actual
+	        			VentanaGanas ventanaGanas = new VentanaGanas();
+	        		}
 	        		
 	        	}
 	        });
@@ -155,7 +207,8 @@ public class PantallaSimulacro extends JFrame {
 	        				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE)
 	        				.addComponent(btnNewButton))
 	        			.addContainerGap(62, Short.MAX_VALUE))
-	        );
+	        ); 
+
 	        groupLayout.setVerticalGroup(
 	        	groupLayout.createParallelGroup(Alignment.TRAILING)
 	        		.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()

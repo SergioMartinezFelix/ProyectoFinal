@@ -22,10 +22,13 @@ public class Agencia implements PagoHotel {
 	private TipoViaje tipoAgencia;
 	private byte descuento;
 	
+	private int dinero;
+	
 	public Agencia(TipoViaje tipoAgencia, byte descuento) {
 		super();
 		this.tipoAgencia = tipoAgencia;
 		this.descuento = descuento;
+		this.dinero = 0;
 	}
 
 	public TipoViaje getTipoAgencia() {
@@ -81,6 +84,15 @@ public class Agencia implements PagoHotel {
 		}
 		
 	}
+
+	public int getDinero() {
+		return dinero;
+	}
+
+	public void setDinero(int dinero) {
+		this.dinero = dinero;
+	}
+	
 	
 	/*
     @Override
