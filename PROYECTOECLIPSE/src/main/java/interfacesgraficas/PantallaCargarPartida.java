@@ -84,56 +84,14 @@ public class PantallaCargarPartida extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String hotelSeleccionado = comboBoxHoteles.getSelectedItem().toString();
+				  String hotelSeleccionado = comboBoxHoteles.getSelectedItem().toString();
 				
-				// se ha seleccionado un hotel, se busca y se cargan sus datos:				
-				try {
-					
-					// guardamos en la base de datos los datos del hotel:
-   			        String myDriver = "com.mysql.cj.jdbc.Driver";
-			        String myUrl = "jdbc:mysql://localhost/gestionhoteles"; // <- getionhotesle es la bd
-			        Class.forName(myDriver);
-			        Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); // <- root y "" son usuario y pass
+				  Hotel hotelCargado = new Hotel(hotelSeleccionado, true);
+		          
+		          JOptionPane.showMessageDialog(null, "Datos del hotel cargados desde la base de datos, iniciando simulador", "", JOptionPane.INFORMATION_MESSAGE);
 			        
-			        // create the java statement
-			        Statement st = conn.createStatement();
-			        String query = "SELECT * FROM hoteles WHERE nombre = '" + hotelSeleccionado + "';";
-			        // execute the query, and get a java resultset
-			        ResultSet rs = st.executeQuery(query);
-			        
-			        // iterate through the java resultset
-			        while (rs.next())
-			        {
-			          int id = rs.getInt("id");
-			          String nombre = rs.getString("nombre");
-			          int estrellas = rs.getInt("estrellas");
-			          int dinero = rs.getInt("dinero");
-			          int personal = rs.getInt("personal");
-			          int precioHabitacion = rs.getInt("precio_habitacion");
-			          int numeroHabitaciones = rs.getInt("numero_habitaciones");
-			         
-			          //public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre) {
-			          Hotel hotelCargado = new Hotel((byte) estrellas, dinero, personal, precioHabitacion, nombre, numeroHabitaciones);
-			          
-			          JOptionPane.showMessageDialog(null, "Datos del hotel cargados desde la base de datos, iniciando simulador", "", JOptionPane.INFORMATION_MESSAGE);
-				        
-				      PantallaSimulacro pantallaSimulacro = new PantallaSimulacro(hotelCargado);
-			        }
-			        st.close();			        
-			        
-			        
-			        
-			        //conn.close();
-			        
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
+			      PantallaSimulacro pantallaSimulacro = new PantallaSimulacro(hotelCargado);
+				  
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

@@ -28,6 +28,7 @@ public class PantallaSimulacro extends JFrame {
 
 	private JTextArea textArea;
 	private Hotel hotel;
+	private JButton btnNewButton_1;
 	
 	public PantallaSimulacro(Hotel hotelCargado) {
 
@@ -58,6 +59,8 @@ public class PantallaSimulacro extends JFrame {
 	        JButton btnNewButton = new JButton("Que pase un nuevo d\u00EDa");
 	        btnNewButton.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
+	        	
+	        		btnNewButton_1.setEnabled(true);
 	        		
 	        		String queOcurre = "Hasta el final de este día ha ocurrido esto: \n";
 	        		textArea.setText( textArea.getText() + queOcurre );
@@ -126,6 +129,10 @@ public class PantallaSimulacro extends JFrame {
 	        		// creamos un cliente y una agencia para que interactúen entre sí:
 	        		Cliente cliente = new Cliente(precioDispuestoAPagar, tipoCliente, precioDispuestoAPagar);
 	        		Agencia agencia = new Agencia(tipoAgencia, (byte) 25);
+	        		
+	        		// registramos en el historial los clientes y las agencias, en el históricos del hotel: algo de polimorfismo
+	        		hotel.getHistorialPagadores().add(cliente);
+	        		hotel.getHistorialPagadores().add(agencia);
 	        		
 	        		// informamos del tipo de cliente y agencia que nos quiere contratar hoy
 	        		
@@ -198,6 +205,19 @@ public class PantallaSimulacro extends JFrame {
 	        		
 	        	}
 	        });
+	        
+	        btnNewButton_1 = new JButton("Ver historico");
+	        btnNewButton_1.setEnabled(false);
+	        
+	        btnNewButton_1.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        
+	        		// cargamos la pantalla para mostrar el historial
+	        		PantallaHistorial pantallaHistorial = new PantallaHistorial(hotel);	        		
+	        		
+	        	}
+	        });
+	        
 	        GroupLayout groupLayout = new GroupLayout(getContentPane());
 	        groupLayout.setHorizontalGroup(
 	        	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -205,15 +225,19 @@ public class PantallaSimulacro extends JFrame {
 	        			.addGap(34)
 	        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 	        				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE)
-	        				.addComponent(btnNewButton))
+	        				.addGroup(groupLayout.createSequentialGroup()
+	        					.addComponent(btnNewButton)
+	        					.addPreferredGap(ComponentPlacement.UNRELATED)
+	        					.addComponent(btnNewButton_1)))
 	        			.addContainerGap(62, Short.MAX_VALUE))
-	        ); 
-
+	        );
 	        groupLayout.setVerticalGroup(
-	        	groupLayout.createParallelGroup(Alignment.TRAILING)
-	        		.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+	        	groupLayout.createParallelGroup(Alignment.LEADING)
+	        		.addGroup(groupLayout.createSequentialGroup()
 	        			.addGap(39)
-	        			.addComponent(btnNewButton)
+	        			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+	        				.addComponent(btnNewButton)
+	        				.addComponent(btnNewButton_1))
 	        			.addGap(18)
 	        			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
 	        			.addGap(19))

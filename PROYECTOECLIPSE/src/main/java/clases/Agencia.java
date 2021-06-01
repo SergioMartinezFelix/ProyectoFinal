@@ -14,29 +14,18 @@ import interfaces.PagoHotel;
  * Clase abstract de la que heredaran los diferentes tipos de agencia y que además implmente la interfaz de PagoHotel 
  * @author sergi
  */
-public class Agencia implements PagoHotel {
+public class Agencia extends ParteNegociante implements PagoHotel {
 
 	private int dineroUltimaTransaccion;
 	private int numeroHabitacionesUltimaTransaccion;
-	
-	private TipoViaje tipoAgencia;
+		
 	private byte descuento;
 	
-	private int dinero;
 	
 	public Agencia(TipoViaje tipoAgencia, byte descuento) {
-		super();
-		this.tipoAgencia = tipoAgencia;
+		super(tipoAgencia, 0);
+		
 		this.descuento = descuento;
-		this.dinero = 0;
-	}
-
-	public TipoViaje getTipoAgencia() {
-		return tipoAgencia;
-	}
-
-	public void setTipoAgencia(TipoViaje tipoAgencia) {
-		this.tipoAgencia = tipoAgencia;
 	}
 
 	public byte getDescuento() {
@@ -85,20 +74,14 @@ public class Agencia implements PagoHotel {
 		
 	}
 
-	public int getDinero() {
-		return dinero;
+	@Override
+	public String toString() {
+		return "Agencia [dineroUltimaTransaccion=" + dineroUltimaTransaccion + ", numeroHabitacionesUltimaTransaccion="
+				+ numeroHabitacionesUltimaTransaccion + ", descuento=" + descuento + ", getTipo()=" + getTipo()
+				+ ", getDinero()=" + getDinero() + ", toString()=" + super.toString() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + "]";
 	}
 
-	public void setDinero(int dinero) {
-		this.dinero = dinero;
-	}
 	
-	
-	/*
-    @Override
-    public void pagarHotel(long dineroAgencia, long dineroHotel) {
-        
-    }
-    */
 	
 }

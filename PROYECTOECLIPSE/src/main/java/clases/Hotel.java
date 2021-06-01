@@ -8,14 +8,24 @@ package clases;
 import excepciones.HabitacionesInsuficientesException;
 import excepciones.PrecioErroneoException;
 import excepciones.PrecioInsuficienteException;
+import interfacesgraficas.PantallaSimulacro;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 /**
  *
+ *    
+ *
  * @author sergi
  */
-public class Hotel extends CosasConNombre{
+public class Hotel extends CosasConNombre {
     
     private Byte estrellas;
     private int dineroHotel;
@@ -23,7 +33,9 @@ public class Hotel extends CosasConNombre{
     private int precio; // precio de cada habitación
     private int numeroHabitaciones;
     private ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
-
+    // aquí usamos tanto una colección como algo de polimorfismo -agencia y cliente son clases hijo de ParteNegociante-
+    private ArrayList<ParteNegociante> historialPagadores = new ArrayList<ParteNegociante>(); 
+    
     public Hotel(Byte estrellas, int dineroHotel, Integer personal, int precio, String nombre, int numeroHabitaciones) {
         super(nombre);
         this.estrellas = estrellas;
@@ -38,6 +50,62 @@ public class Hotel extends CosasConNombre{
         super(nombre);
     }
     
+     public Hotel(String hotelSeleccionado, boolean cargarDesdeBd) {
+    	super("");
+    	 
+		// se ha seleccionado un hotel, se busca y se cargan sus datos:				
+		try {
+			
+			// guardamos en la base de datos los datos del hotel:
+	        String myDriver = "com.mysql.cj.jdbc.Driver";
+	        String myUrl = "jdbc:mysql://localhost/gestionhoteles"; // <- getionhotesle es la bd
+	        Class.forName(myDriver);
+	        Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); // <- root y "" son usuario y pass
+	        
+	        // create the java statement
+	        Statement st = conn.createStatement();
+	        String query = "SELECT * FROM hoteles WHERE nombre = '" + hotelSeleccionado + "';";
+	        // execute the query, and get a java resultset
+	        ResultSet rs = st.executeQuery(query);
+	        
+	        // iterate through the java resultset
+	        while (rs.next())
+	        {
+	          int id = rs.getInt("id");
+	          String nombre = rs.getString("nombre");
+	          byte estrellas = rs.getByte("estrellas");
+	          int dinero = rs.getInt("dinero");
+	          int personal = rs.getInt("personal");
+	          int precioHabitacion = rs.getInt("precio_habitacion");
+	          int numeroHabitaciones = rs.getInt("numero_habitaciones");
+	         
+	          //public Hotel(Byte estrellas, Long dineroHotel, Integer personal, Long precio, String nombre) {
+	          //Hotel hotelCargado = new Hotel(estrellas, dinero, personal, precioHabitacion, nombre, numeroHabitaciones);
+	          
+	          // metemos con setters los valores en los atributos:
+	          this.setEstrellas(estrellas);
+	          this.setDineroHotel(dinero);
+	          this.setPersonal(personal);
+	          this.setPrecio(precioHabitacion);
+	          this.setNombre(nombre);
+	          this.setNumeroHabitaciones(numeroHabitaciones);
+	        }
+	        st.close();			        
+    	 
+		} catch (ClassNotFoundException e1) {
+			
+			e1.printStackTrace();
+			
+		} catch (SQLException e1) {
+			
+			e1.printStackTrace();
+		} catch (PrecioErroneoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	        
+	        
+     }
+     
     public Byte getEstrellas() {
         return estrellas;
     }
@@ -133,4 +201,40 @@ public class Hotel extends CosasConNombre{
     	}
     	
     }
+    
+    public void guardarEnBaseDeDatos() {
+    	
+	    try {
+			// guardamos en la base de datos los datos del hotel:
+		    String myDriver = "com.mysql.cj.jdbc.Driver";
+		    String myUrl = "jdbc:mysql://localhost/gestionhoteles"; // <- "gestionhoteles" es mi BD	    	
+	    	
+			Class.forName(myDriver);
+
+		    Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); //<- "root" y "" son user y pass
+		  
+		    Statement st = conn.createStatement();
+		    st.executeUpdate("INSERT INTO `hoteles` (`id`, `nombre`, `estrellas`, `dinero`, `personal`, `precio_habitacion`, `numero_habitaciones`) VALUES (NULL, '" + this.getNombre() + "', '" + this.getEstrellas() + "', '" + this.getDineroHotel() + "', '" + this.getPersonal() + "', '" + this.getPrecio() + "', '" + this.getNumeroHabitaciones() + "');");
+	
+	        conn.close();
+	        
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+    }
+
+	public ArrayList<ParteNegociante> getHistorialPagadores() {
+		return historialPagadores;
+	}
+
+	public void setHistorialPagadores(ArrayList<ParteNegociante> historialPagadores) {
+		this.historialPagadores = historialPagadores;
+	}
+    
+    
 }

@@ -14,38 +14,32 @@ import java.util.ArrayList;
  *
  * @author sergi
  */
-public class Cliente implements PagoAgencia {
-
-    private int dineroCliente;
-    private int dineroDispuestoAPagar; // por una habitación
-    private TipoViaje tipoCliente;
+public class Cliente extends ParteNegociante implements PagoAgencia {
+    
+    private int dineroDispuestoAPagar; // por una habitación    
     private ArrayList<String> datos= new ArrayList<String>();
 	
     public Cliente(int dineroCliente, TipoViaje tipoCliente, int dineroDispuestoAPagar) {
-        this.dineroCliente = dineroCliente;
+		super(tipoCliente, dineroCliente);
+    	
         this.dineroDispuestoAPagar = dineroDispuestoAPagar;
-        this.tipoCliente = tipoCliente;
     }
-
-	public int getDineroCliente() {
-		return dineroCliente;
-	}
 	
 	public int getDineroDispuestoAPagar() {
 		return dineroDispuestoAPagar;
 	}	
 
-	public void setDineroCliente(int dineroCliente) {
-		this.dineroCliente = dineroCliente;
-	}
-
+	/*
 	public TipoViaje getTipoCliente() {
 		return tipoCliente;
 	}
+	*/
 
+	/*
 	public void setTipoCliente(TipoViaje tipoCliente) {
 		this.tipoCliente = tipoCliente;
 	}
+	*/
 
 	public ArrayList<String> getDatos() {
 		return datos;
@@ -63,7 +57,7 @@ public class Cliente implements PagoAgencia {
 		System.out.println("precioFinal es " + precioFinal);
 		
 		// en caso de que el tipo de cliente coincida con el tipo de agencia, habrá un descuento:
-		if (getTipoCliente() == agencia.getTipoAgencia()) {
+		if (this.getTipo() == agencia.getTipo()) {
 			
 			// aplicamos el descuento:
 			precioFinal = precioFinal - (precioFinal * (agencia.getDescuento() / 100));
@@ -76,5 +70,14 @@ public class Cliente implements PagoAgencia {
 		// la agencia registra también el número de habitaciones por las que ha recibido ese dinero
 		agencia.setNumeroHabitacionesUltimaTransaccion(numeroHabitaciones);
 	}
-    
+
+	@Override
+	public String toString() {
+		return "Cliente [dineroDispuestoAPagar=" + dineroDispuestoAPagar + ", datos=" + datos + ", getTipo()="
+				+ getTipo() + ", getDinero()=" + getDinero() + ", toString()=" + super.toString() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + "]";
+	}
+
+	
+	
 }

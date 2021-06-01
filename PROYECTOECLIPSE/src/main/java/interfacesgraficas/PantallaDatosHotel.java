@@ -71,22 +71,14 @@ public class PantallaDatosHotel extends JFrame {
 						throw new PrecioErroneoException();
 					}
 					
-					// guardamos en la base de datos los datos del hotel:
-   			        String myDriver = "com.mysql.cj.jdbc.Driver";
-			        String myUrl = "jdbc:mysql://localhost/gestionhoteles"; // <- "gestionhoteles" es mi BD
-			        Class.forName(myDriver);
-			        Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); //<- "root" y "" son user y pass
-			      
-			        Statement st = conn.createStatement();
-			        st.executeUpdate("INSERT INTO `hoteles` (`id`, `nombre`, `estrellas`, `dinero`, `personal`, `precio_habitacion`, `numero_habitaciones`) VALUES (NULL, '" + nombreHotel + "', '" + estrellas + "', '" + dinero + "', '" + personal + "', '" + precioHabitacion + "', '" + numeroHabitaciones + "');");
-
+					// guardamos en la tabla hotel el hotel 
+					
+					Hotel hotelNuevo = new Hotel((byte) estrellas, dinero, personal, precioHabitacion, nombreHotel, numeroHabitaciones);
+					hotelNuevo.guardarEnBaseDeDatos();
+					
 			        JOptionPane.showMessageDialog(null, "Datos del hotel guardados en la base de datos, iniciando simulador...", "", JOptionPane.INFORMATION_MESSAGE);
-			        
-			        Hotel hotelCargado = new Hotel((byte) estrellas, dinero, personal, precioHabitacion, nombreHotel, numeroHabitaciones);
-			        
-			        PantallaSimulacro pantallaSimulacro = new PantallaSimulacro( hotelCargado );
-			        
-			        conn.close();
+			        			        
+			        PantallaSimulacro pantallaSimulacro = new PantallaSimulacro( hotelNuevo );
 					
 				} catch (NumberFormatException error) {
 					error.printStackTrace();
@@ -97,14 +89,7 @@ public class PantallaDatosHotel extends JFrame {
 					
 					JOptionPane.showMessageDialog(null, "Debes escribir en 'precio de habitación' un número entre 50 y 100 inclusives", "Error", JOptionPane.ERROR_MESSAGE);
 					
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				} 
 				
 			}
 		});
