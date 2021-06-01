@@ -23,38 +23,29 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
+ * Clase ejecutable del programa
  *
- * @author sergi
- * 
- * 
+ * @author Sergio Martínez Félix
+ * version 1.0
+ * since 1.0 
  * SIMULACIÓN DE REVENUE MANAGEMENT DE UN HOTEL
 
 
-Al empezar el programa, se pedirá al usuario (director) que indique cual será el precio de la habitación para esa jornada, informando de un precio mínimo y de un precio máximo. Si el usuario mete un precio erróneo, se lanzará una excepción y se volverá a pedir el dato.
 
-
-Después sortearemos el número de habitaciones que el cliente necesitará esa jornada, el tipo de habitación (boolean mar o ciudad), el tipo de cliente, la agencia que usará así como el precio que estará dispuesto a pagar. El cliente pagará ese dinero a la agencia.
-
-
-Si el tipo de cliente coincide con el tipo de agencia, entonces el cliente obtendrá un descuento en el precio, por lo que la agencia devolverá parte del dinero pagado al cliente. Y aparte hará el ingreso del dinero de la estancia al hotel.
-
-
-Volvemos al hotel… si el dinero que se recibe de la agencia es inferior al precio fijado por el hotel al principio de la simulación, el hotel cancelará la reserva y lanzará una excepción precio insuficiente. Devolviendo el dinero tanto al cliente como a la agencia, de lo contrario el hotel aceptará la reserva.
-
-
-Si el número de habitaciones solicitadas por el cliente es superior a las disponibles por el hotel, la reserva también se cancelará y saltará una excepción número de habitaciones insuficientes.
-
-
-Si la reserva no es cancelada, el hotel contratará personal dependiendo de la cuantía de habitaciones vendidas para el día. Al final del día, el hotel pagará un alquiler (haya vendido o no habitaciones), y antes de pasar al siguiente día, se pedirá al usuario si quiere conseguir una estrella más o por lo contrario, quitar bajar la categoría del hotel. Cuanto mayor sea el número de estrellas, más alto será el precio mínimo que podrá pedir y viceversa. Si desea aumentar de estrellas deberá pagar una cantidad de dinero como inversión, si por el contrario baja de categoría, recibirá dinero por la venta de mobiliario, habitaciones… etc, será una forma de conseguir liquidez.
-
-
-El bucle continúa hasta que el hotel quiebre o alcance una cantidad de dinero determinada.
  * 
  */
 public class NewMain {
 
     /**
-     * @param args the command line arguments
+     * 
+     * Con este programa se quiere ayudar a la toma de decisiones dentro del ambito de la gestión hotelera. La idea 
+     * es que el usuario (la persona encargada de fijar los precios en el hotel) indique el precio deseado al principio de 
+     * cada jornada, después se solteará dentro de un rango el precio que el cliente está dispuesto a pagar (para fijar dicho 
+     * rango en la vida real se usaría el histórico de precios de años pasados) así como el número de habitaciones que 
+     * el cliente va a demandar (de nuevo podemos tener una idea apróximada de este número observando el histórico de reservas
+     * de años anteriores) La simulación continúa hasta que el hotel quiebre o se alcance un número determinado de dinero 
+     * 
+     * @param args este programa no tiene argumentos 
      * @throws excepciones.PrecioErroneoException
      */
     public static void main(String[] args) {
