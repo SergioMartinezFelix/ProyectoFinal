@@ -28,8 +28,23 @@ public class PantallaDatosHotel extends JFrame {
 	private JTextField textFieldPersonal;
 	private JTextField textNumeroHabitaciones;
 	
-	public PantallaDatosHotel() {
-		setTitle("Perfil del hotel");
+	private boolean editar;
+	private String nombreHotel;
+	private JButton btnNewButton;
+	
+	public PantallaDatosHotel(boolean editar, String nombreHotel) {
+		btnNewButton = new JButton("Comenzar");
+		
+		this.editar = editar;
+		this.nombreHotel = nombreHotel;
+		
+		if (editar == true) {
+			setTitle("Editar Perfil del hotel");
+			btnNewButton.setText("Modificar");
+		} else {
+			setTitle("Crear Nuevo Perfil de hotel");
+			btnNewButton.setText("Crear");
+		}
 		
 		setSize(800, 600);
 		
@@ -52,44 +67,11 @@ public class PantallaDatosHotel extends JFrame {
 		
 		textPrecioHabitacion = new JTextField();
 		textPrecioHabitacion.setColumns(10);
-		
-		JButton btnNewButton = new JButton("Comenzar");
+				
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				try {
-					// recoger los datos de las cajetillas de texto:
-					String nombreHotel = textNombreHotel.getText();
-					int dinero = Integer.valueOf( textDinero.getText() );
-					int estrellas = Integer.valueOf( textNumeroEstrellas.getText() );
-					int precioHabitacion = Integer.valueOf( textPrecioHabitacion.getText() );
-					int personal = Integer.valueOf( textFieldPersonal.getText() );
-					int numeroHabitaciones = Integer.valueOf( textNumeroHabitaciones.getText() );
-					
-					// comprobamos que el precio de la habitación esté en el rango adecuado:
-					if (precioHabitacion < 50 || precioHabitacion > 100) {
-						throw new PrecioErroneoException();
-					}
-					
-					// guardamos en la tabla hotel el hotel 
-					
-					Hotel hotelNuevo = new Hotel((byte) estrellas, dinero, personal, precioHabitacion, nombreHotel, numeroHabitaciones);
-					hotelNuevo.guardarEnBaseDeDatos();
-					
-			        JOptionPane.showMessageDialog(null, "Datos del hotel guardados en la base de datos, iniciando simulador...", "", JOptionPane.INFORMATION_MESSAGE);
-			        			        
-			        PantallaSimulacro pantallaSimulacro = new PantallaSimulacro( hotelNuevo );
-					
-				} catch (NumberFormatException error) {
-					error.printStackTrace();
-					
-					JOptionPane.showMessageDialog(null, "Debes escribir campos numéricos en 'dinero' y 'precioHabitacion'", "Error", JOptionPane.ERROR_MESSAGE);
-					
-				} catch (PrecioErroneoException error) {
-					
-					JOptionPane.showMessageDialog(null, "Debes escribir en 'precio de habitación' un número entre 50 y 100 inclusives", "Error", JOptionPane.ERROR_MESSAGE);
-					
-				} 
+				
+				modificarOCrearHotel();
 				
 			}
 		});
@@ -103,6 +85,12 @@ public class PantallaDatosHotel extends JFrame {
 		
 		textNumeroHabitaciones = new JTextField();
 		textNumeroHabitaciones.setColumns(10);
+		
+		// cargamos desde la base de datos
+		if (editar == true) {
+			cargarDatosDesdeBD();	
+		} 
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -159,6 +147,104 @@ public class PantallaDatosHotel extends JFrame {
 		);
 		getContentPane().setLayout(groupLayout);
 		setVisible(true);
+		
+	}
+
+	public void modificarOCrearHotel() {
+
+		if (editar == true) {
+			// por aquí pasa cuando editamos el hotel
+			
+			try {
+				
+				// recoger los datos de las cajetillas de texto:
+				String nuevoNombreHotel = textNombreHotel.getText();
+				int dinero = Integer.valueOf( textDinero.getText() );
+				int estrellas = Integer.valueOf( textNumeroEstrellas.getText() );
+				int precioHabitacion = Integer.valueOf( textPrecioHabitacion.getText() );
+				int personal = Integer.valueOf( textFieldPersonal.getText() );
+				int numeroHabitaciones = Integer.valueOf( textNumeroHabitaciones.getText() );
+				
+				// comprobamos que el precio de la habitación esté en el rango adecuado:
+				if (precioHabitacion < 50 || precioHabitacion > 100) {
+					throw new PrecioErroneoException();
+				}
+				
+				// guardamos en la tabla hotel el hotel 
+				
+				Hotel hotelNuevo = new Hotel((byte) estrellas, dinero, personal, precioHabitacion, nuevoNombreHotel, numeroHabitaciones);
+				hotelNuevo.modificarEnBaseDeDatos(nombreHotel);
+				
+		        JOptionPane.showMessageDialog(null, "Datos del hotel modificados correctamente en la base de datos", "", JOptionPane.INFORMATION_MESSAGE);
+		        	
+		        this.dispose();
+		        //PantallaSimulacro pantallaSimulacro = new PantallaSimulacro( hotelNuevo );
+				
+			} catch (NumberFormatException error) {
+				error.printStackTrace();
+				
+				JOptionPane.showMessageDialog(null, "Debes escribir campos numéricos en 'dinero' y 'precioHabitacion'", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			} catch (PrecioErroneoException error) {
+				
+				JOptionPane.showMessageDialog(null, "Debes escribir en 'precio de habitación' un número entre 50 y 100 inclusives", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			}
+			
+		} else {
+			// aquí es cuando creamos el hotel
+			
+			try {
+				
+				// recoger los datos de las cajetillas de texto:
+				String nombreHotel = textNombreHotel.getText();
+				int dinero = Integer.valueOf( textDinero.getText() );
+				int estrellas = Integer.valueOf( textNumeroEstrellas.getText() );
+				int precioHabitacion = Integer.valueOf( textPrecioHabitacion.getText() );
+				int personal = Integer.valueOf( textFieldPersonal.getText() );
+				int numeroHabitaciones = Integer.valueOf( textNumeroHabitaciones.getText() );
+				
+				// comprobamos que el precio de la habitación esté en el rango adecuado:
+				if (precioHabitacion < 50 || precioHabitacion > 100) {
+					throw new PrecioErroneoException();
+				}
+				
+				// guardamos en la tabla hotel el hotel 
+				
+				Hotel hotelNuevo = new Hotel((byte) estrellas, dinero, personal, precioHabitacion, nombreHotel, numeroHabitaciones);
+				hotelNuevo.guardarEnBaseDeDatos();
+				
+		        JOptionPane.showMessageDialog(null, "Datos del hotel guardados en la base de datos, iniciando simulador...", "", JOptionPane.INFORMATION_MESSAGE);
+		        	
+		        //dispose();
+		        PantallaSimulacro pantallaSimulacro = new PantallaSimulacro( hotelNuevo );
+				
+			} catch (NumberFormatException error) {
+				error.printStackTrace();
+				
+				JOptionPane.showMessageDialog(null, "Debes escribir campos numéricos en 'dinero' y 'precioHabitacion'", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			} catch (PrecioErroneoException error) {
+				
+				JOptionPane.showMessageDialog(null, "Debes escribir en 'precio de habitación' un número entre 50 y 100 inclusives", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			} 
+			
+			
+		}
+		
+	}
+	
+	public void cargarDatosDesdeBD() {
+
+		Hotel hotelAEditar = new Hotel(nombreHotel, true);
+
+		textNombreHotel.setText( hotelAEditar.getNombre() );
+		textNumeroEstrellas.setText( String.valueOf( hotelAEditar.getEstrellas() ) );
+		textDinero.setText( String.valueOf( hotelAEditar.getDineroHotel() ) );
+		textPrecioHabitacion.setText( String.valueOf( hotelAEditar.getPrecio() ) );
+		textFieldPersonal.setText( String.valueOf( hotelAEditar.getPersonal() ));
+		textNumeroHabitaciones.setText( String.valueOf( hotelAEditar.getNumeroHabitaciones() ) );		
 		
 	}
 }

@@ -245,7 +245,7 @@ public class PantallaSimulacro extends JFrame {
 	        getContentPane().setLayout(groupLayout);
 
 	        // make it easy to close the application
-	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        // set the frame size (you'll usually want to call frame.pack())
 	        setSize(new Dimension(540, 382));

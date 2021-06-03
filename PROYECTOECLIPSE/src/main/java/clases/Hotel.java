@@ -34,6 +34,7 @@ public class Hotel extends CosasConNombre {
     private int numeroHabitaciones;
     private ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
     // aquí usamos tanto una colección como algo de polimorfismo -agencia y cliente son clases hijo de ParteNegociante-
+    // esto es polimorfismo porque estamos almacenando aquí tanto clientes como agencias 
     private ArrayList<ParteNegociante> historialPagadores = new ArrayList<ParteNegociante>(); 
     
     public Hotel(Byte estrellas, int dineroHotel, Integer personal, int precio, String nombre, int numeroHabitaciones) {
@@ -65,6 +66,7 @@ public class Hotel extends CosasConNombre {
 	        // create the java statement
 	        Statement st = conn.createStatement();
 	        String query = "SELECT * FROM hoteles WHERE nombre = '" + hotelSeleccionado + "';";
+	        System.out.println("sql es " + query);
 	        // execute the query, and get a java resultset
 	        ResultSet rs = st.executeQuery(query);
 	        
@@ -89,6 +91,8 @@ public class Hotel extends CosasConNombre {
 	          this.setPrecio(precioHabitacion);
 	          this.setNombre(nombre);
 	          this.setNumeroHabitaciones(numeroHabitaciones);
+	          
+	          System.out.println("El objeto generado es " + this.toString());
 	        }
 	        st.close();			        
     	 
@@ -228,6 +232,67 @@ public class Hotel extends CosasConNombre {
 	    
     }
 
+    public void modificarEnBaseDeDatos(String nombre) {
+    	
+	    try {
+			// guardamos en la base de datos los datos del hotel:
+		    String myDriver = "com.mysql.cj.jdbc.Driver";
+		    String myUrl = "jdbc:mysql://localhost/gestionhoteles"; // <- "gestionhoteles" es mi BD	    	
+	    	
+			Class.forName(myDriver);
+
+		    Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); //<- "root" y "" son user y pass
+		  
+		    Statement st = conn.createStatement();
+		    String sql = "UPDATE `hoteles` SET nombre = '" + this.getNombre()  + "', estrellas = '" + this.getEstrellas() + "', dinero = '" + this.getDineroHotel() + "', personal = '" + this.getPersonal() + "', precio_habitacion = '" + this.getPrecio() + "', numero_habitaciones = '" + this.getNumeroHabitaciones() + "' WHERE nombre = '" + nombre + "';"; 
+		    st.executeUpdate(sql);
+	
+	        conn.close();
+	        
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+    }
+    
+    
+    public static boolean borrarDeBaseDeDatos(String nombreHotel) {
+    	
+    	boolean exito;
+    	
+	    try {
+			// guardamos en la base de datos los datos del hotel:
+		    String myDriver = "com.mysql.cj.jdbc.Driver";
+		    String myUrl = "jdbc:mysql://localhost/gestionhoteles"; // <- "gestionhoteles" es mi BD	    	
+	    	
+			Class.forName(myDriver);
+
+		    Connection conn = DriverManager.getConnection(myUrl, "root", "91033128Ss"); //<- "root" y "" son user y pass
+		  
+		    Statement st = conn.createStatement();
+		    st.executeUpdate("DELETE FROM  `hoteles` WHERE `nombre` = '" + nombreHotel + "';");
+	
+	        conn.close();
+	        
+	        exito = true;
+	        
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			exito = false;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			exito = false;
+		}
+	    	    
+	    return exito;
+    }
+    
 	public ArrayList<ParteNegociante> getHistorialPagadores() {
 		return historialPagadores;
 	}

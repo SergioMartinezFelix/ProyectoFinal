@@ -7,6 +7,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class PantallaInicio extends JFrame {
 	
@@ -18,7 +19,7 @@ public class PantallaInicio extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 								
-				PantallaDatosHotel pantallaDatosHotel = new PantallaDatosHotel();
+				PantallaDatosHotel pantallaDatosHotel = new PantallaDatosHotel(false, null);
 				
 			}
 		});
@@ -34,12 +35,32 @@ public class PantallaInicio extends JFrame {
 			}
 		});
 		
+		JButton btnNewButton_2 = new JButton("Borrar Hotel");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				VentanaListaHoteles ventanaListaHoteles = new VentanaListaHoteles("viene de boton borrar");
+				
+			}
+		});
+		
+		JButton btnNewButton_3 = new JButton("Editar Hotel");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				VentanaListaHoteles ventanaListaHoteles = new VentanaListaHoteles("viene de boton editar");
+				
+			}
+		});
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addGap(299)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnNewButton_3)
+						.addComponent(btnNewButton_2)
 						.addComponent(btnNewButton_1)
 						.addComponent(btnNewButton))
 					.addContainerGap(330, Short.MAX_VALUE))
@@ -49,9 +70,13 @@ public class PantallaInicio extends JFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(115)
 					.addComponent(btnNewButton)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnNewButton_2)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnNewButton_3)
+					.addGap(9)
 					.addComponent(btnNewButton_1)
-					.addContainerGap(382, Short.MAX_VALUE))
+					.addContainerGap(323, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 
