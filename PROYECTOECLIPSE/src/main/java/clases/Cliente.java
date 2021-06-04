@@ -11,14 +11,19 @@ import interfaces.PagoAgencia;
 import java.util.ArrayList;
 
 /**
- *
- * @author sergi
+ * Clase que modela los objetos de tipo cliente y que hereda de ParteNegociante
+ * @author Sergio Martínez Félix
  */
 public class Cliente extends ParteNegociante implements PagoAgencia {
     
     private int dineroDispuestoAPagar; // por una habitación    
-    private ArrayList<String> datos= new ArrayList<String>();
-	
+    private ArrayList<String> datos= new ArrayList<String>();   //datos del cliente 
+    
+    
+  //constructor 
+  	/*
+  	 * Constructor de la clase cliente 
+  	 */
     public Cliente(int dineroCliente, TipoViaje tipoCliente, int dineroDispuestoAPagar) {
 		super(tipoCliente, dineroCliente);
     	
@@ -49,6 +54,13 @@ public class Cliente extends ParteNegociante implements PagoAgencia {
 		this.datos = datos;
 	}
 
+	
+	 /**
+     * Realiza el pago a la agencia
+     *
+     * @param Agencia un objeto de tipo agencia
+     * @paran el número de habitaciones 
+     */
 	public void pagarAgencia(Agencia agencia, int numeroHabitaciones) {
 		
 		// precio final que paga el cliente A LA AGENCIA
@@ -71,6 +83,12 @@ public class Cliente extends ParteNegociante implements PagoAgencia {
 		agencia.setNumeroHabitacionesUltimaTransaccion(numeroHabitaciones);
 	}
 
+	/**
+     * Devuelve una cadena con un informe sobre los atributos del objeto
+     *
+     * @return String con información sobre los atributos del objeto
+     */
+	
 	@Override
 	public String toString() {
 		return "Cliente [dineroDispuestoAPagar=" + dineroDispuestoAPagar + ", datos=" + datos + ", getTipo()="

@@ -11,17 +11,24 @@ import excepciones.PrecioInsuficienteException;
 import interfaces.PagoHotel;
 
 /**
- * Clase abstract de la que heredaran los diferentes tipos de agencia y que ademÃ¡s implmente la interfaz de PagoHotel 
- * @author sergi
+ * Clase que modela los objetos de tipo Agencia y que hereda de ParteNegociante
+ * @author Sergio Martínez Félix
+ * Version 1.0
+ * since 1.0
  */
 public class Agencia extends ParteNegociante implements PagoHotel {
 
-	private int dineroUltimaTransaccion;
-	private int numeroHabitacionesUltimaTransaccion;
+	private int dineroUltimaTransaccion;  //el dinero de la última transacción
+	private int numeroHabitacionesUltimaTransaccion;   //el número de habitaciones pedidas en la última transacción 
 		
-	private byte descuento;
+	private byte descuento;   //descuento que tendremos si el tipo de agencia coincide con el tipo de cliente
+ 	
+	  
 	
-	
+	//constructor 
+	/*
+	 * Constructor de la clase agencia 
+	 */
 	public Agencia(TipoViaje tipoAgencia, byte descuento) {
 		super(tipoAgencia, 0);
 		
@@ -52,6 +59,12 @@ public class Agencia extends ParteNegociante implements PagoHotel {
 		return this.dineroUltimaTransaccion;
 	}
 
+	/**
+	 * 
+	 * realiza el pago al hotel en el caso de que el número de habitaciones y el precio sean suficientes
+	 * 
+	 * @param hotel un objeto de tipo Hotel 
+	 */
 	public void pagarHotel(Hotel hotel) throws PrecioInsuficienteException, HabitacionesInsuficientesException {
 
 		try {
@@ -73,6 +86,13 @@ public class Agencia extends ParteNegociante implements PagoHotel {
 		}
 		
 	}
+	
+	
+	/**
+     * Devuelve una cadena con un informe sobre los atributos del objeto
+     *
+     * @return String con información sobre los atributos del objeto
+     */
 
 	@Override
 	public String toString() {

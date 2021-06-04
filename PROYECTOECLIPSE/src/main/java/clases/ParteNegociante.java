@@ -2,6 +2,14 @@ package clases;
 
 import enums.TipoViaje;
 
+/**
+ * Clase abstracta de la que heredan cliente y agencia
+ * @author Sergio Martínez Félix
+ * Version 1.0
+ * since 1.0
+ */
+
+
 public abstract class ParteNegociante {
 
 	private TipoViaje tipo;
@@ -29,6 +37,12 @@ public abstract class ParteNegociante {
 		this.dinero = dinero;
 	}
 
+	
+	/**
+     * Devuelve una cadena con un informe sobre los atributos del objeto
+     *
+     * @return String con información sobre los atributos del objeto
+     */
 	@Override
 	public String toString() {
 		return "ParteNegociante [tipo=" + tipo + ", dinero=" + dinero + "]";

@@ -172,7 +172,13 @@ public class Hotel extends CosasConNombre {
     public void setHabitaciones(ArrayList<Habitacion> habitaciones) {
         this.habitaciones = habitaciones;
     }
+    
 
+    /**
+     * Devuelve una cadena con un informe sobre los atributos del objeto
+     *
+     * @return String con información sobre los atributos del objeto
+     */    
     @Override
     public String toString() {
         return "Hotel{" + "estrellas=" + estrellas + ", dineroHotel=" + dineroHotel + ", personal=" + personal + ", precio=" + precio + ", habitaciones=" + habitaciones + '}';

@@ -6,13 +6,18 @@
 package clases;
 
 /**
- *
- * @author sergi
+ * Clase abstracta de la que heredan habitación y hotel
+ * @author Sergio Martínez Félix
  */
 public abstract class CosasConNombre {
 
-    String nombre;
+    String nombre;  // le da nombre al objeto
 
+    
+    //constructor 
+  	/*
+  	 * Constructor de la clase CosasConNombre 
+  	 */
     public CosasConNombre(String nombre) {
         this.nombre = nombre;
     }
