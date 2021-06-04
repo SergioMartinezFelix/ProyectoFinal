@@ -184,11 +184,7 @@ public class PantallaSimulacro extends JFrame {
 	        		queOcurre = "Por costes diarios de mantenimiento y demás has tenido estos gastos: " + (gastosFijos + gastosVariables) + "€ \n";
 	        		queOcurre += "Por eso te queda este dinero: " + hotel.getDineroHotel() + "\n \n \n";
 	        		textArea.setText( textArea.getText() + queOcurre );
-	        		
-	        		// por hacer:
-	        		
-	        		// si te arruinas acaba el juego
-	        		// y si llegas a una cierta cantidad es que has ganado el juego
+
 	        		
 	        		if (hotel.getDineroHotel() <= 0) {
 	        			// pierdes y se acaba el juego 
